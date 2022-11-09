@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('image');
             $table->integer('price_product');
-            $table->string('about_product'); 
+            $table->integer('product_qty'); 
+            $table->string('product_code');
             $table->integer('user_id');
             $table->timestamps();
         });

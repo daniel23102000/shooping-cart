@@ -44,7 +44,8 @@ class DashboardProductController extends Controller
             'slug' => 'required|unique:products',
             'image' => 'image|file|max:1024',
             'price_product' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-            'about_product' => 'required'
+            'product_qty' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+            'product_code' => 'required|unique:products'
 
         ]);
 

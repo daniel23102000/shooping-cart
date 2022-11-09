@@ -7,6 +7,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\DashboardOrderController;
+use App\Http\Controllers\DashboardCartController;
 
 
 /*
@@ -28,12 +31,19 @@ Route::get('/', function () {
 })->middleware('auth');
 
 Route::get('/products/{product:slug}', [ProductController::class, 'show'])->middleware('auth');
+// Route::get('/orders/{product:slug}', [OrderController::class, 'show'])->middleware('auth');
+// Route::post('/orders/{product:slug}', [OrderController::class, 'store'])->middleware('auth');
 Route::post('/products/{product:slug}', [ProductController::class, 'store'])->middleware('auth');
 
 Route::get('/products', [ProductController::class, 'index'])->middleware('auth');
-Route::get('/products/{user:username}', [ProductController::class, 'showuserproduct'])->middleware('auth');
+Route::get('/orders', [OrderController::class, 'index'])->middleware('auth');
+Route::get('/orders/{user:username}', [OrderController::class, 'show'])->middleware('auth');
+Route::post('/orders/{user:username}', [OrderController::class, 'store'])->middleware('auth');
+Route::get('/checkout', [OrderController::class, 'checkout'])->middleware('auth');
 
-Route::get('/carts', [ProductController::class, 'cart'])->middleware('auth');
+Route::get('/products/{user:username}', [ProductController::class, 'checkout'])->middleware('auth');
+
+Route::get('/carts', [CartController::class, 'index'])->middleware('auth');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
@@ -47,3 +57,5 @@ route::get('/dashboard', function() {
 })->middleware('auth');
 
 Route::resource('/dashboard/products', DashboardProductController::class)->middleware('auth');
+Route::get('/dashboard/checkout', [DashboardOrderController::class, 'index'])->middleware('auth');
+Route::resource('/dashboard/cart', DashboardCartController::class)->middleware('auth');

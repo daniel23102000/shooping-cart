@@ -20,9 +20,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{ Request::is('dashboard/customers*') ? 'active' : '' }}" href="/dashboard/customers">
+            <a class="nav-link {{ Request::is('dashboard/checkout*') ? 'active' : '' }}" href="/dashboard/checkout">
               <span data-feather="file-text" class="align-text-bottom"></span>
-              My Customer
+              Checkout
             </a>
           </li>
         </ul>

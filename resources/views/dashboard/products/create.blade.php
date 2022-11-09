@@ -48,14 +48,16 @@
        </div>
    </div>
 
-	<div class="element-textarea">
-		<label class="title"></label>
-    <span>About Product</span>
+   <input class="small" type="hidden" name="product_qty" id="product_qty" value="1"/>
+
+   <div class="element-number">
+		<label class="title">
+			<span>Product Code</span>
+		</label>
 		<div class="item-cont">
-			<textarea class="medium" id="about_product" name="about_product" placeholder="About the product"></textarea>
-			<span class="icon-place"></span>
-		</div>
-	</div>
+			<input class="small" type="text" id="product_code" name="product_code" placeholder="Product Code"/><span class="icon-place"></span>
+       </div>
+   </div>
 
   <button type="submit" class="btn btn-primary">Create product</button>
 </form>

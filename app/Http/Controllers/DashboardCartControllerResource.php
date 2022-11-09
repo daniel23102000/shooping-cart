@@ -2,23 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
 use Illuminate\Http\Request;
-use Cviebrock\EloquentSluggable\Services\SlugService;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
 
-class CartController extends Controller
+class DashboardCartControllerResource extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Cart $cart)
+    public function index()
     {
-        $cart = Cart::where('buyer_user', auth()->user()->id)->get();
-        return view('carts', compact('cart'));
+        $cart = Cart::where('product_owner', auth()->user()->id)->get();
+        return view('dashboard.cart.index', compact('cart'));
     }
 
     /**
@@ -84,6 +80,7 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Cart::destroy($id);
+        return redirect('/dashboard/cart')->with('success', 'product has been delete!');
     }
 }

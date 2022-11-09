@@ -1,19 +1,24 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\User;
+use App\Models\Order;
 
-class ProductController extends Controller
+class OrderController extends Controller
 {
     public function index()
     {
         $title = '';
+        if(request('category')){
+            $category = Category::firstWhere('slug', request('category'));
+            $title = ' in ' . $category->name;
+        }
         if(request('user')){
             $user = User::firstWhere('username', request('user'));
-            $title = ' by ' . $user->name;
         }
         return view('products', [
             "title" => "All Products" . $title,
@@ -24,17 +29,18 @@ class ProductController extends Controller
         ]);
     }
 
-    public function show(Product $product)
+    public function show(User $user)
     {
-        return view('product', [
-            "title" => "Single product",
-            "active" => 'products',
-            "product" => $product
+        return view('checkout', [
+            "title" => "Single user",
+            "active" => 'users',
+            "user" => $user
         ]);
     }
 
-    public function checkout(User $user){
-        return view('checkout');
+    public function checkout(){
+        $checkout = Order::where('buyer_user', auth()->user()->id)->get();
+        return view('checkoutresult', compact('checkout'));
     }
 
 
@@ -42,19 +48,16 @@ class ProductController extends Controller
     {
         $validatedData = $request->validate([
             'product_owner' => 'required',
-            'product_ownerusername' => 'required',
-            'product_price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-            'id_product' => 'required',
-            'name_product' => 'required',
-            'image' => 'required',
-            'qty' => 'required',
-            'total_price' => 'required',
-            'product_code' => 'required'
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'pmode' => 'required',
         ]);
 
         $validatedData['buyer_user'] = auth()->user()->id;
 
-        Cart::create($validatedData);
+        Order::create($validatedData);
 
         return redirect('/carts')->with('success', 'Registration successful! Please login');
     }
@@ -84,4 +87,5 @@ class ProductController extends Controller
             "product" => $product::all()
         ]);
     }
+
 }
