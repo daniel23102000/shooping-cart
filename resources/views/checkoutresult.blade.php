@@ -21,7 +21,6 @@
               <th scope="col">Pmode</th>
               <th scope="col">Created At</th>
               <th scope="col">Updated At</th>
-              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -36,18 +35,6 @@
               <td>{{ $ckt->pmode }}</td>
               <td>{{ $ckt->created_at }}</td>
               <td>{{ $ckt->updated_at }}</td>
-              <td>
-                <a href="/dashboard/products/{{ $ckt->id }}" class="badge bg-info"><span data-feather="eye">
-                </span></a>
-                <a href="/dashboard/products/{{ $ckt->id }}/edit" class="badge bg-warning"><span data-feather="edit">
-                </span></a>
-                <form action="/dashboard/products/{{ $ckt->id }}" method="post" class="d-inline">
-                  @method('delete')
-                  @csrf
-                  <button class="badge bg-danger border-0" onclick="return confirm('Are you sure?')">
-                  <span data-feather="x-circle"></span></button>
-                </form>
-              </td>
             </tr>
             @endforeach
           </tbody>

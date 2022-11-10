@@ -59,7 +59,7 @@ class OrderController extends Controller
 
         Order::create($validatedData);
 
-        return redirect('/carts')->with('success', 'Registration successful! Please login');
+        return redirect('/checkout')->with('success', 'Registration successful! Please login');
     }
 
     public function cart()

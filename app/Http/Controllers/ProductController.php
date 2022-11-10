@@ -41,6 +41,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'buyer_user' => 'required',
             'product_owner' => 'required',
             'product_ownerusername' => 'required',
             'product_price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
@@ -48,11 +49,11 @@ class ProductController extends Controller
             'name_product' => 'required',
             'image' => 'required',
             'qty' => 'required',
-            'total_price' => 'required',
             'product_code' => 'required'
         ]);
 
-        $validatedData['buyer_user'] = auth()->user()->id;
+        // $validatedData['buyer_user'] = auth()->user()->id;
+        $validatedData['total_price'] = $request->product_price * $request->qty;
 
         Cart::create($validatedData);
 
